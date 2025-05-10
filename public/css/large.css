@@ -1,0 +1,59 @@
+html {
+    background-image: url("/images/site/small_check.jpg");
+    /* Update the path */
+    background-repeat: repeat;
+    /* This is the default behavior */ 
+}
+
+h1 a {
+    font-size: 3rem;
+}
+
+#tools a {
+    font-size: 1.5rem;
+    font-weight: lighter;
+}
+
+nav a {
+    font-size: 1rem;
+}
+
+body {
+    margin: 5rem auto;
+    background-color: white;
+    border: .5rem rgb(78, 169, 255) solid;
+    border-radius: 1rem;
+    padding: 1rem;     
+    max-width: 900px;
+}
+
+.cta-box {
+    top: 80%;
+    left: 30%;
+}
+
+picture {
+    padding: 0; 
+}
+
+.dmc-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 2rem;
+    margin: 1rem 1rem 3rem 1rem;
+}
+
+.reviews {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.upgrades {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.reviews li {
+    padding: 1rem 0;
+}
