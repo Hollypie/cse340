@@ -11,7 +11,8 @@
 }
 
 :root {
-  --primary-color: rgb(0, 132, 255);
+  --primary-color: rgb(74, 166, 253);
+  --font-color: rgb(1, 76, 146);
   
   --title-font: 'Open Sans';
   --main-font: 'Open Sans';
@@ -119,9 +120,9 @@ button:hover {
 
 .cta-box {
   position: absolute;
-  color: var(--primary-color);
+  color: var(--font-color);
   font-weight: bold;
-  top: 70%;
+  top: 12%;
   left: 25%;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.8);
@@ -134,7 +135,7 @@ button:hover {
 .cta-box h1 {
   font-weight: bold;
   font-size: 1.2rem;
-  color: var(--primary-color);
+  color: var(--font-color);
 }
 
 .cta-box p {

@@ -27,9 +27,15 @@ body {
     max-width: 900px;
 }
 
+.hero-image img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    display: block; }
+
 .cta-box {
-    top: 80%;
-    left: 30%;
+    top: 15%;
+    left: 25%;
 }
 
 picture {
