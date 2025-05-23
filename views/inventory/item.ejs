@@ -1,0 +1,35 @@
+<!-- views/inventory/item.ejs -->
+
+<% if (item) { %>
+    <h1>
+        <%= item.inv_make %>
+            <%= item.inv_model %>
+    </h1>
+
+    <div class="item-details">
+        <img class="full-img" src="<%= item.inv_image %>" alt="Image of <%= item.inv_make %> <%= item.inv_model %>" width=500 >
+        <img class="thumbnail-img" src="<%= item.inv_image %>" alt="Image of <%= item.inv_make %> <%= item.inv_model %>" width=200 >
+
+        <ul class="details-list">
+            <li><strong>Make:</strong> <%= item.inv_make.toLocaleString() %>
+            </li>
+            <li><strong>Model:</strong> <%= item.inv_model.toLocaleString() %>
+            </li>
+            <li><strong>Price:</strong>
+                <%= new Intl.NumberFormat('en-US', { style: 'currency' , currency: 'USD' }).format(item.inv_price) %>
+            </li>
+            <li><strong>Description:</strong>
+                <%= item.inv_description %>
+            </li>
+            <li><strong>Color:</strong>
+                <%= item.inv_color %>
+            </li>
+            <li><strong>Mileage:</strong>
+                <%= item.inv_miles.toLocaleString() %> miles
+            </li>
+        </ul>
+    </div>
+    <% } else { %>
+        <h1>Item not found</h1>
+        <p>We couldn’t find the item you’re looking for.</p>
+        <% } %>

@@ -18,6 +18,10 @@
   --main-font: 'Open Sans';
 }
 
+html, body {
+  min-width: 0;
+}
+
 .header-container {
   display: grid;
   grid-template-columns: auto auto;
@@ -70,9 +74,6 @@ nav {
 nav ul {
   display: flex;
   justify-content: center;
-  /* Centers the items horizontally */
-  gap: .25rem;
-  /* Space between items */
   margin: 0;
   padding: 0;
   list-style: none;
@@ -81,7 +82,7 @@ nav ul {
 nav a {
   text-decoration: none;
   color: white;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem .3rem;
   display: block;
   font-size: .75rem;
 }
@@ -206,4 +207,69 @@ picture {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+/* Below is the styling for the li elements in the main element */
+
+#inv-display {
+  display: flex;
+  /* <-- this makes the items horizontal */
+  gap: 2rem;
+  /* adds spacing between items */
+  list-style: none;
+  /* removes default bullets */
+  padding: 0;
+  flex-wrap: wrap;
+  /* allows wrapping on smaller screens */
+  justify-content: center;
+  /* optional: center-align items */
+}
+
+#inv-display li {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 200px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+#inv-display li:hover {
+  transform: scale(1.05);
+}
+
+#inv-display img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.namePrice {
+  padding: 0.5rem;
+}
+
+.namePrice h2 {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.namePrice span {
+  display: block;
+  color: #2d862d;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Styling for item details view in website which shows the thumbnail in small view and larger image in larger views */
+
+.full-img {
+  display: none;
+
+}
+
+.thumbnail-img {
+  display:block;
+  
 }

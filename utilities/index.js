@@ -6,7 +6,7 @@ const Util = {}
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  console.log(data)
+  // console.log(data)
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
@@ -56,6 +56,36 @@ Util.buildClassificationGrid = async function(data){
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
+}
+
+/* **************************************
+* Build the item details view HTML
+* ************************************ */
+Util.buildItemDetailsView = async function(item) {
+  let details = ""
+
+  if (item) {
+    details += '<div class="item-details">'
+    // Mobile thumbnail image
+    details += `<img src="${item.inv_thumbnail}" alt="Thumbnail of ${item.inv_make} ${item.inv_model}" class="thumbnail-img">`
+
+    // Desktop full-size image
+    details += `<img src="${item.inv_image}" alt="Image of ${item.inv_make} ${item.inv_model}" class="full-img">`
+
+    details += `<ul>`
+    details += `<li><strong>Make:</strong> ${item.inv_make}</li>`
+    details += `<li><strong>Model:</strong> ${item.inv_model}</li>`
+    details += `<li><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(item.inv_price)}</li>`
+    details += `<li><strong>Description:</strong> ${item.inv_description}</li>`
+    details += `<li><strong>Color:</strong> ${item.inv_color}</li>`
+    details += `<li><strong>Mileage:</strong> ${new Intl.NumberFormat('en-US').format(item.inv_miles)} miles</li>`
+    details += `</ul>`
+    details += `</div>`
+  } else {
+    details += '<p class="notice">Sorry, no matching vehicle data could be found.</p>'
+  }
+
+  return details
 }
 
 /* ****************************************

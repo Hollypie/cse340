@@ -19,5 +19,29 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build item detail view by inv_id
+ * ************************** */
+invCont.buildItemDetails = async function (req, res, next) {
+  const inv_id = req.params.invId
+  const itemData = await invModel.getDetailsByInventoryId(inv_id)
+  let nav = await utilities.getNav()
+
+  if (itemData && itemData.length > 0) {
+    const item = itemData[0]
+    res.render("./inventory/item", {
+      title: `${item.inv_make} ${item.inv_model}`,
+      nav,
+      item
+    })
+  } else {
+    res.render("./inventory/item", {
+      title: "Item not found",
+      nav,
+      item: null
+    })
+  }
+}
+
 
 module.exports = invCont

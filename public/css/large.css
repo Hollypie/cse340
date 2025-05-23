@@ -16,6 +16,7 @@ h1 a {
 
 nav a {
     font-size: 1rem;
+    padding: 0.75rem 1rem;
 }
 
 body {
@@ -62,4 +63,28 @@ picture {
 
 .reviews li {
     padding: 1rem 0;
+}
+
+/* Styling for item details view in website which shows the thumbnail in small view and larger image in larger views */
+
+.full-img {
+    display: block;
+    
+}
+
+.thumbnail-img {
+    display: none;
+}
+
+.item-details {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.item-details img {
+    grid-column: 1 / 2;
+}
+
+.details-list {
+    grid-column: 2 / 3;
 }
