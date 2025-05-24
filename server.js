@@ -13,6 +13,7 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
+const errorRoute = require("./routes/errorRoute")
 
 /* ***********************
  * View Engine and Templates
@@ -32,10 +33,16 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
   
+// Error route - for the one in the footer
+app.use("/errors", errorRoute)
+
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
+
+
+
 
 /* ***********************
 * Express Error Handler
@@ -44,9 +51,20 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
+
+  let title
+  let message
+
+  if (err.status == 404) {
+    title = "404 - Page Not Found"
+    message = err.message
+  } else {
+    title = "500-type Server Error"
+    message = 'Oh no! There was a crash. Maybe try a different route?'
+  }
+
   res.render("errors/error", {
-    title: err.status || 'Server Error',
+    title,
     message,
     nav
   })
@@ -64,4 +82,13 @@ const host = process.env.HOST
  *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
+})
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain')
+  res.send('User-agent: *\nDisallow:')
+})
+
+app.get('/.well-known/appspecific/com.chrome.devtools.json', (req, res) => {
+  res.status(204).send() // No Content
 })
