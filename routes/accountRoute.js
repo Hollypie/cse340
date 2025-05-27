@@ -11,4 +11,8 @@ router.get("/", utilities.handleErrors(accountController.buildLogin));
 // Route to show registration view
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
+
+// Route to send registration info to Database
+router.post('/register', utilities.handleErrors(accountController.registerAccount))
+
 module.exports = router;
