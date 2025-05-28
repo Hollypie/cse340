@@ -330,11 +330,22 @@ p a:hover {
   text-decoration: underline;
 }
 
-input:required:invalid,
-input:focus:invalid {
+/* Default state: white background */
+input:required {
+  background-color: white;
+}
+
+/* When the input is focused and invalid (reddish pink) */
+input:required:focus:invalid {
   background-color: rgb(248, 173, 173);
 }
 
+/* Optional: After user input but still invalid (not empty anymore) */
+input:required:invalid:not(:focus):not(:placeholder-shown) {
+  background-color: rgb(248, 173, 173);
+}
+
+/* When the input is valid (green) */
 input:required:valid {
   background-color: #a1fda1;
 }
