@@ -15,11 +15,10 @@
                 
 
                 <div class="form-container">
-                    <form id="addInventoryForm" action="/inv/add-inventory" method="post" novalidate>
+                    <form id="addInventoryForm" action="/inv/add-inventory" name="addInventoryForm" method="post">
                         <!-- Classification Dropdown -->
                         <label for="classification_id">Classification</label>
-                        <select id="classification_id" name="classification_id" required>
-                        <%= classificationSelect %>
+                        <%- classificationSelect %>
                         </select>
                     
                         <label for="inv_make">Make</label>

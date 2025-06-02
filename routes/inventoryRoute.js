@@ -22,8 +22,11 @@ router.get("/add-classification", invCont.buildAddClassification);
 // Route for Add Inventory View
 router.get("/add-inventory", invCont.buildAddInventory);
 
-// ✅ Route for submitting new classification (process form POST)
+// Route for submitting new classification (process form POST)
 router.post("/add-classification", validateClassification, checkValidation, invCont.addClassification);
+
+// Route for submitting a new inventory item (process form POST)
+router.post("/add-inventory", invCont.addInventory);
 
 
 module.exports = router;

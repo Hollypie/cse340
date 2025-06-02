@@ -59,6 +59,59 @@ async function addClassification(classification_name) {
 }
 
 /* ***************************
+ *  Add New Inventory Item to Inventory
+ * ************************** */
+async function addInventoryItem(
+  classification_id,
+  inv_make,
+  inv_model,
+  inv_year,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_miles,
+  inv_color
+) {
+  try {
+
+    const sql = `
+      INSERT INTO inventory (
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING *;
+    `;
+
+    const result = await pool.query(sql, [
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color
+    ]);
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Database insert error:", error);
+    return null;
+  }
+}
+
+/* ***************************
  *  Get All Classifications
  * ************************** */
 async function getAllClassifications() {
@@ -73,4 +126,5 @@ module.exports = {
   getDetailsByInventoryId,
   addClassification,
   getAllClassifications,
+  addInventoryItem
 }

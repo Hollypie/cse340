@@ -109,18 +109,93 @@ invCont.addClassification = async function (req, res) {
  * ************************** */
 invCont.buildAddInventory = async function (req, res) {
   let nav = await utilities.getNav();
+  const classification_id = req.body?.classification_id || "";  // get previously selected or blank
   let classificationSelect = await utilities.buildClassificationList();
   try {
     res.render("inventory/add-inventory", {
       title: "Add New Inventory",
       nav,
       classificationSelect,
-      notice: req.flash("notice"),
+      notice: req.flash("message"),
     });
   } catch (error) {
     console.error("Error loading add inventory view:", error);
     res.status(500).send("Server Error");
   }
 };
+
+/* ***************************
+ *  Add New Inventory Item
+ * ************************** */
+invCont.addInventory = async function (req, res) {
+  const nav = await utilities.getNav()
+
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_price,
+    inv_miles,
+    inv_color
+  } = req.body
+
+  // Build image paths
+  const fileSafeName = inv_model.replace(/\s+/g, "-").toLowerCase() // sanitize the make
+  const inv_image = `/images/vehicles/${fileSafeName}.jpg`
+  const inv_thumbnail = `/images/vehicles/${fileSafeName}-tn.jpg`
+
+  try {
+    const addResult = await invModel.addInventoryItem(
+      parseInt(classification_id),
+      inv_make,
+      inv_model,
+      parseInt(inv_year),
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      parseFloat(inv_price),
+      parseFloat(inv_miles),
+      inv_color
+    )
+
+    if (addResult) {
+      req.flash("notice", `${inv_make} ${inv_model} was added successfully.`)
+      res.redirect("/inv/management")
+    } else {
+      let classificationSelect = await utilities.buildClassificationList();
+      req.flash("notice", "Sorry, the item could not be added.")
+      res.status(500).render("inventory/add-inventory", {
+        title: "Add Inventory",
+        nav,
+        classificationSelect,
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_price,
+        inv_miles,
+        inv_color
+      })
+    }
+  } catch (error) {
+    console.error("Controller error:", error)
+    req.flash("notice", "An unexpected error occurred.")
+    res.status(500).render("inventory/add-inventory", {
+      title: "Add Inventory",
+      nav,
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_price,
+      inv_miles,
+      inv_color
+    })
+  }
+}
 
 module.exports = invCont;
