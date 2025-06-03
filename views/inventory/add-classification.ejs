@@ -6,11 +6,8 @@
         <h1>Inventory Management</h1>
         <% } %>
 
-            <% if (locals.notice) { %>
-                <div class="notice">
-                    <%- messages() %>
-                </div>
-                <% } %>
+            <!-- Flash Messages -->
+            <%- messages() %>
 
                     <% if (locals.errors && errors.length> 0) { %>
                         <div class="error-container">

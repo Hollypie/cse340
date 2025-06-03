@@ -7,22 +7,19 @@
         <h1>Inventory Management</h1>
         <% } %>
 
-            <% if (locals.notice) { %>
-                <div class="notice">
-                    <%- messages() %>
-                </div>
-                <% } %>
+            <!-- Flash Messages -->
+            <%- messages() %>
 
-                    <ul>
-                        <li>
-                            <a href="/inv/add-classification">
-                                <button>Add New Classification</button>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/inv/add-inventory">
-                                <button>Add New Inventory</button>
-                            </a>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>
+                        <a href="/inv/add-classification">
+                            <button>Add New Classification</button>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/inv/add-inventory">
+                            <button>Add New Inventory</button>
+                        </a>
+                    </li>
+                </ul>
   

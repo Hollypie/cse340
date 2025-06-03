@@ -7,8 +7,8 @@
     </h1>
 
     <div class="item-details">
-        <img class="full-img" src="<%= item.inv_image %>" alt="Image of <%= item.inv_make %> <%= item.inv_model %>" width=500 >
-        <img class="thumbnail-img" src="<%= item.inv_image %>" alt="Image of <%= item.inv_make %> <%= item.inv_model %>" width=200 >
+        <img class="full-img" src="<%= item.inv_image %>" onerror="this.onerror=null;this.src='/images/vehicles/default.jpg';" alt="Image of <%= item.inv_make %> <%= item.inv_model %>" width=500 >
+        <img class="thumbnail-img" src="<%= item.inv_thumbnail %>" onerror="this.onerror=null;this.src='/images/vehicles/default-tn.jpg';" alt="Image of <%= item.inv_make %> <%= item.inv_model %>" width=200 >
 
         <ul class="details-list">
             <li><strong>Make:</strong> <%= item.inv_make.toLocaleString() %>

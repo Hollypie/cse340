@@ -9,10 +9,22 @@ const invCont = {};
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId;
   const data = await invModel.getInventoryByClassificationId(classification_id);
-  const grid = await utilities.buildClassificationGrid(data);
-  let nav = await utilities.getNav();
+  const nav = await utilities.getNav();
+
+  // If there are no vehicles, show a message instead of crashing
+  if (!data || data.length === 0) {
+    return res.render("./inventory/classification", {
+      title: "No Vehicles Found",
+      nav,
+      grid: "<p class='notice'>Sorry, there are no vehicles in this classification yet.</p>",
+    });
+  }
+
+  // Now it's safe to access data[0]
   const className = data[0].classification_name;
-  res.render("./inventory/classification", {
+  const grid = await utilities.buildClassificationGrid(data);
+
+  return res.render("./inventory/classification", {
     title: className + " vehicles",
     nav,
     grid,
@@ -52,7 +64,6 @@ invCont.buildManagement = async function (req, res, next) {
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
-      notice: req.flash("notice"),
     });
   } catch (error) {
     console.error("Error loading management view:", error);
@@ -116,7 +127,7 @@ invCont.buildAddInventory = async function (req, res) {
       title: "Add New Inventory",
       nav,
       classificationSelect,
-      notice: req.flash("message"),
+      notice: req.flash("notice"),
     });
   } catch (error) {
     console.error("Error loading add inventory view:", error);
