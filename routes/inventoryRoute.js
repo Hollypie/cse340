@@ -24,6 +24,9 @@ router.get("/add-inventory", invCont.buildAddInventory);
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invCont.getInventoryJSON));
 
+// Route for modifying a inventory item
+router.get("/edit/:inv_id", utilities.handleErrors(invCont.editInventoryView));
+
 // Route for submitting new classification (process form POST)
 router.post("/add-classification", validateClassification, checkValidation, invCont.addClassification);
 
