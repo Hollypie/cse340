@@ -155,9 +155,8 @@ invCont.addInventory = async function (req, res) {
   } = req.body
 
   // Build image paths
-  const fileSafeName = inv_model.replace(/\s+/g, "-").toLowerCase() // sanitize the make
-  const inv_image = `/images/vehicles/${fileSafeName}.jpg`
-  const inv_thumbnail = `/images/vehicles/${fileSafeName}-tn.jpg`
+  const inv_image = `/images/vehicles/no-image.png`
+  const inv_thumbnail = `/images/vehicles/no-image-tn.png`
 
   try {
     const addResult = await invModel.addInventoryItem(
