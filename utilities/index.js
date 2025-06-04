@@ -148,9 +148,11 @@ Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     next()
   } else {
-    req.flash("notice", "Please log in.")
+    const message = "Please log in."
+    req.flash("notice", message)
     return res.redirect("/account/login")
   }
- }
+}
+
 
 module.exports = Util
