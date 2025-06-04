@@ -143,6 +143,23 @@ async function accountLogin(req, res) {
   }
 }
 
+/* ****************************************
+ *  Deliver Account Management View
+ * ************************************ */
+async function deliverDefaultView(req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    res.render("account", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      success: req.flash("success"),
+      error: req.flash("error")
+    });
+  } catch (err) {
+    next(err);
+  }
+}
   
-module.exports = { buildLogin, buildRegister, registerAccount, loginAccount }
+module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, accountLogin, deliverDefaultView }
 
