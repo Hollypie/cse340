@@ -2,7 +2,7 @@ const express = require("express")
 const router = new express.Router() 
 const invCont = require("../controllers/invController")
 const { validateClassification, checkValidation } = require("../utilities/inventory-validation");
-
+const utilities = require("../utilities/");
 
 // Route for /inv/ base url
 router.get("/", invCont.buildManagement);
@@ -22,11 +22,14 @@ router.get("/add-classification", invCont.buildAddClassification);
 // Route for Add Inventory View
 router.get("/add-inventory", invCont.buildAddInventory);
 
+router.get("/getInventory/:classification_id", utilities.handleErrors(invCont.getInventoryJSON));
+
 // Route for submitting new classification (process form POST)
 router.post("/add-classification", validateClassification, checkValidation, invCont.addClassification);
 
 // Route for submitting a new inventory item (process form POST)
 router.post("/add-inventory", invCont.addInventory);
+
 
 
 module.exports = router;
