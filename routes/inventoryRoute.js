@@ -1,26 +1,26 @@
 const express = require("express")
 const router = new express.Router() 
 const invCont = require("../controllers/invController")
-const { validateClassification, checkValidation } = require("../utilities/inventory-validation");
+const { checkInventoryData, checkUpdateData, validateClassification, checkValidation, validateInventoryItem } = require("../utilities/inventory-validation");
 const utilities = require("../utilities/");
 
 // Route for /inv/ base url
-router.get("/", invCont.buildManagement);
+router.get("/", utilities.checkLogin, utilities.handleErrors(invCont.buildManagement));
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invCont.buildByClassificationId);
+router.get("/type/:classificationId", utilities.handleErrors(invCont.buildByClassificationId));
 
 // Route for item details
-router.get("/detail/:invId", invCont.buildItemDetails);
+router.get("/detail/:invId", utilities.handleErrors(invCont.buildItemDetails));
 
 // Route for Management view
-router.get("/management", invCont.buildManagement);
+router.get("/management", utilities.handleErrors(invCont.buildManagement));
 
 // Route for Add Classification View (display form)
-router.get("/add-classification", invCont.buildAddClassification);
+router.get("/add-classification", utilities.handleErrors(invCont.buildAddClassification));
 
 // Route for Add Inventory View
-router.get("/add-inventory", invCont.buildAddInventory);
+router.get("/add-inventory", utilities.handleErrors(invCont.buildAddInventory));
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invCont.getInventoryJSON));
 
@@ -28,10 +28,13 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invCont.ge
 router.get("/edit/:inv_id", utilities.handleErrors(invCont.editInventoryView));
 
 // Route for submitting new classification (process form POST)
-router.post("/add-classification", validateClassification, checkValidation, invCont.addClassification);
+router.post("/add-classification", validateClassification, checkValidation, utilities.handleErrors(invCont.addClassification));
 
 // Route for submitting a new inventory item (process form POST)
-router.post("/add-inventory", invCont.addInventory);
+router.post("/add-inventory", validateInventoryItem, checkInventoryData, utilities.handleErrors(invCont.addInventory));
+
+// Route for handling incoming request to update the Inventory Item details
+router.post("/update/", validateInventoryItem, checkUpdateData, utilities.handleErrors(invCont.updateInventory));
 
 
 

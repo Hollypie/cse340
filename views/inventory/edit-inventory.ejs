@@ -28,7 +28,10 @@
                     
                         <label for="inv_description">Description</label>
                         <textarea id="inv_description" name="inv_description" rows="4" cols="50" required maxlength="500" placeholder="Max 500 characters."><%= locals.inv_description || '' %></textarea>
-                    
+                        
+                        <input type="hidden" name="inv_image" value="<%= inv_image %>">
+                        <input type="hidden" name="inv_thumbnail" value="<%= inv_thumbnail %>">
+
                         <label for="inv_price">Price</label>
                         <input type="number" id="inv_price" name="inv_price" required step="0.01" min="0" placeholder="Price" value="<%= locals.inv_price || '' %>">
                     
@@ -39,5 +42,7 @@
                         <input type="text" id="inv_color" name="inv_color" required placeholder="Color" value="<%= locals.inv_color || '' %>">
                     
                         <button type="submit">Update Vehicle</button>
+                        <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+                        <% } %>>
                     </form>
                 </div>

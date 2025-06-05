@@ -1,4 +1,3 @@
-<!-- The Content Heading -->
 <% if (title) { %>
     <h1>
         <%= title %>
@@ -10,34 +9,46 @@
             <!-- Flash Messages -->
             <%- messages() %>
 
-                <div class="form-container">
-                    <form id="addInventoryForm" action="/inv/add-inventory" name="addInventoryForm" method="post">
-                        <!-- Classification Dropdown -->
-                        <label for="classification_id">Classification</label>
-                        <%- classificationSelect %>
-                        </select>
-                    
-                        <label for="inv_make">Make</label>
-                        <input type="text" id="inv_make" name="inv_make" required placeholder="Make" value="<%= locals.inv_make || '' %>">
-                    
-                        <label for="inv_model">Model</label>
-                        <input type="text" id="inv_model" name="inv_model" required placeholder="Model" value="<%= locals.inv_model || '' %>">
-                    
-                        <label for="inv_year">Year</label>
-                        <input type="number" id="inv_year" name="inv_year" required placeholder="Year" min="1886" max="2099" step="1" value="<%= locals.inv_year || '' %>">
-                    
-                        <label for="inv_description">Description</label>
-                        <textarea id="inv_description" name="inv_description" rows="4" cols="50" required maxlength="500" placeholder="Max 500 characters."><%= locals.inv_description || '' %></textarea>
-                    
-                        <label for="inv_price">Price</label>
-                        <input type="number" id="inv_price" name="inv_price" required step="0.01" min="0" placeholder="Price" value="<%= locals.inv_price || '' %>">
-                    
-                        <label for="inv_miles">Mileage</label>
-                        <input type="number" id="inv_miles" name="inv_miles" required min="0" placeholder="Miles" value="<%= locals.inv_miles || '' %>">
-                    
-                        <label for="inv_color">Color</label>
-                        <input type="text" id="inv_color" name="inv_color" required placeholder="Color" value="<%= locals.inv_color || '' %>">
-                    
-                        <button type="submit">Add New Inventory Item</button>
-                    </form>
-                </div>
+                <% if (locals.errors && errors.length> 0) { %>
+                    <div class="error-container">
+                        <ul>
+                            <% errors.forEach(error=> { %>
+                                <li>
+                                    <%= error.msg %>
+                                </li>
+                                <% }); %>
+                        </ul>
+                    </div>
+                    <% } %>
+
+                    <div class="form-container">
+                        <form id="addInventoryForm" action="/inv/add-inventory" name="addInventoryForm" method="post">
+                            <!-- Classification Dropdown -->
+                            <label for="classification_id">Classification</label>
+                            <%- classificationSelect %>
+                            </select>
+                        
+                            <label for="inv_make">Make</label>
+                            <input type="text" id="inv_make" name="inv_make" required placeholder="Make" value="<%= locals.inv_make || '' %>">
+                        
+                            <label for="inv_model">Model</label>
+                            <input type="text" id="inv_model" name="inv_model" required placeholder="Model" value="<%= locals.inv_model || '' %>">
+                        
+                            <label for="inv_year">Year</label>
+                            <input type="number" id="inv_year" name="inv_year" required placeholder="Year" min="1886" max="2099" step="1" value="<%= locals.inv_year || '' %>">
+                        
+                            <label for="inv_description">Description</label>
+                            <textarea id="inv_description" name="inv_description" rows="4" cols="50" required maxlength="500" placeholder="Max 500 characters."><%= locals.inv_description || '' %></textarea>
+
+                            <label for="inv_price">Price</label>
+                            <input type="number" id="inv_price" name="inv_price" required step="0.01" min="0" placeholder="Price" value="<%= locals.inv_price || '' %>">
+                        
+                            <label for="inv_miles">Mileage</label>
+                            <input type="number" id="inv_miles" name="inv_miles" required min="0" placeholder="Miles" value="<%= locals.inv_miles || '' %>">
+                        
+                            <label for="inv_color">Color</label>
+                            <input type="text" id="inv_color" name="inv_color" required placeholder="Color" value="<%= locals.inv_color || '' %>">
+                        
+                            <button type="submit">Add New Inventory Item</button>
+                        </form>
+                    </div>
