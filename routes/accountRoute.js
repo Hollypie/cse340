@@ -16,6 +16,8 @@ router.get("/register", utilities.handleErrors(accountController.buildRegister))
 // Route to show Log out view
 router.get("/logout", utilities.handleErrors(accountController.processLogout));
 
+router.get("/update", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountUpdateView));
+
 // Process the registration data
 router.post(
     "/register",
@@ -30,6 +32,21 @@ router.post(
   regValidate.loginRules(),
   regValidate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
+)
+
+// Process the Update Account Data
+router.post(
+  "/update",
+  regValidate.updateAccountRules(),
+  regValidate.checkUpdateAccountData,
+  utilities.handleErrors(accountController.updateAccountData)
+)
+
+// Process the Change Passwords Form
+router.post(
+  "/update-password",
+  regValidate.changePasswordRules(),
+  utilities.handleErrors(accountController.processChangePassword)
 )
 
 module.exports = router;

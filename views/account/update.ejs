@@ -1,0 +1,64 @@
+<h1>
+    <%= title %>
+</h1>
+<%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% }%>
+
+            <p>ALL FIELDS ARE REQUIRED</p>
+            <div class="form-container">
+                <form id="updateAccountForm" action="/account/update" method="post">
+                    <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+                    <input type="hidden" name="account_id" value="<%= account.account_id %>">
+                    
+                    <label for="accountFirstname">First Name:</label>
+                    <input type="text" name="account_firstname" id="accountFirstname" required
+                        placeholder="Your First Name" value="<%= locals.account_firstname %>">
+
+                    <label for="accountLastname">Last Name:</label>
+                    <input type="text" id="accountLastname" name="account_lastname" required
+                        placeholder="Your Last Name" value="<%= locals.account_lastname %>">
+
+                    <label for="accountEmail">Email</label>
+                    <input type="email" id="accountEmail" name="account_email" required
+                        placeholder="Enter a valid email address" value="<%= locals.account_email %>">
+
+                    <button type="submit">Update Account Information</button>
+                </form>
+            </div>
+
+            <div class="form-container">
+                <form id="changePassword" action="/account/update-password" method="post">
+                    <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+            
+                    <!-- Password Field -->
+                    <label for="account_password">Password</label>
+                    <input type="password" id="account_password" class="toggle-password" name="account_password" required
+                        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$" minlength="12"
+                        title="Password must be at least 12 characters long, contain at least one uppercase letter, one number, and one special character."
+                        placeholder="Your Password" />
+                    
+                    <!-- Confirm Password Field -->
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" class="toggle-password" name="confirm_password" required
+                        placeholder="Re-enter Password" />
+                    
+                    <!-- Toggle Button -->
+                    <button type="button" id="pswdBtn" aria-label="Toggle password visibility">Show Passwords</button>
+
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+              
+            
+
+            <script src="/js/register.js" defer></script>
+
+            

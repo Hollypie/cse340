@@ -112,5 +112,91 @@ validate.checkLoginData = async (req, res, next) => {
   }
   next()
 }
+
+/* **********************************
+ * Account Update Validation Rules
+ * ********************************* */
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("First name is required."),
+
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Last name is required."),
+
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email, { req }) => {
+        const existingAccount = await accountModel.getAccountByEmail(account_email)
+        // Only throw an error if the email belongs to a different account
+        if (existingAccount && existingAccount.account_id != req.body.account_id) {
+          throw new Error("Email already in use by another account.")
+        }
+      })
+  ]
+}
+
+/* ******************************
+ * Check data and return errors or continue to update Account data
+ * ***************************** */
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const { account_firstname, account_lastname, account_email } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/update", {
+      errors,
+      title: "Update Account Data",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+    return
+  }
+  next()
+}
+
+/*  **********************************
+  *  Change Password Rules
+  * ********************************* */
+validate.changePasswordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .notEmpty().withMessage("Password is required.")
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage(
+        "Password must be at least 12 characters long and include at least one uppercase letter, one number, and one special character."
+      ),
+
+    body("confirm_password")
+      .trim()
+      .notEmpty().withMessage("Please confirm your password.")
+      .custom((value, { req }) => {
+        if (value !== req.body.account_password) {
+          throw new Error("Passwords do not match.");
+        }
+        return true;
+      }),
+  ];
+};
+
   
   module.exports = validate

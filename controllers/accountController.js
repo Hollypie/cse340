@@ -1,5 +1,3 @@
-// controllers/accountController.js
-
 const utilities = require("../utilities");
 const accountModel = require("../models/account-model");
 const bcrypt = require("bcryptjs");
@@ -158,6 +156,41 @@ async function accountLogin(req, res) {
 }
 
 /* ****************************************
+*  Process update Account Data
+* *************************************** */
+async function updateAccountData(req, res) {
+  let nav = await utilities.getNav();
+  const { account_id, account_firstname, account_lastname, account_email } = req.body;
+
+  const accountResult = await accountModel.updateAccount(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email
+  );
+
+  if (accountResult) {
+    req.flash("notice", "Congratulations, you’ve updated your account.");
+    res.status(201).render("account/update", {
+      title: "Update Account Data",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+    });
+  } else {
+    req.flash("notice", "Sorry, the account update failed.");
+    res.status(501).render("account/update", {
+      title: "Update Account Data",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+    });
+  }
+}
+
+/* ****************************************
  *  Deliver Account Management View
  * ************************************ */
 async function buildManagement(req, res, next) {
@@ -174,6 +207,27 @@ async function buildManagement(req, res, next) {
     next(err);
   }
 }
+
+/* ****************************************
+ *  Deliver Account Update View
+ * ************************************ */
+async function buildAccountUpdateView(req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    res.render("account/update", {
+      title: "Update Account Information",
+      nav,
+      errors: null,
+      success: req.flash("success"),
+      error: req.flash("error")
+    });
+  } catch (err) {
+    next(err);
+  }
+}
   
-module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, accountLogin, buildManagement, processLogout }
+
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, accountLogin, buildManagement, processLogout, buildAccountUpdateView, updateAccountData }
 
