@@ -391,3 +391,9 @@ main li {
 #inventoryDisplay a:hover {
   text-decoration: underline;
 }
+
+/* color text change for error messages and alerts */
+.alert {
+  color: red;
+  font-weight: bold;
+}

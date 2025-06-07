@@ -35,5 +35,19 @@
                                     <!-- Page Content -->
                                     <div class="content-container">
                                         <p>You're logged in.</p>
+
+                                        <h2>Welcome <%= user.account_firstname %>
+                                        </h2>
+
+                                        <!-- Update Account Link (for all users) -->
+                                        <p><a href="/account/account-update/<%= user.account_id %>">Update Account
+                                                Information</a></p>
+
+                                        <!-- Inventory Management (for Employee or Admin only) -->
+                                        <% if (user.account_type==="Employee" || user.account_type==="Admin" ) { %>
+                                            <h3>Inventory Management</h3>
+                                            <p><a href="/inv" title="Go to Inventory Management">Inventory
+                                                    Management</a></p>
+                                            <% } %>
                                     </div>
   

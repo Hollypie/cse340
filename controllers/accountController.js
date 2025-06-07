@@ -19,6 +19,20 @@ async function buildLogin(req, res, next) {
 }
 
 /* ****************************************
+*  Process Logout
+* *************************************** */
+async function processLogout(req, res, next) {
+  try {
+    res.clearCookie("jwt")
+    req.flash("success", "You have successfully logged out.");
+    return res.redirect("/")
+  } catch (err) {
+    next(err)
+  }
+}
+
+
+/* ****************************************
 *  Deliver registration view
 * *************************************** */
 async function buildRegister(req, res, next) {
@@ -161,5 +175,5 @@ async function buildManagement(req, res, next) {
   }
 }
   
-module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, accountLogin, buildManagement }
+module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, accountLogin, buildManagement, processLogout }
 

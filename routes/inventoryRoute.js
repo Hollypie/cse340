@@ -5,7 +5,7 @@ const { checkInventoryData, checkUpdateData, validateClassification, checkValida
 const utilities = require("../utilities/");
 
 // Route for /inv/ base url
-router.get("/", utilities.checkLogin, utilities.handleErrors(invCont.buildManagement));
+router.get("/", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invCont.buildManagement));  
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invCont.buildByClassificationId));
@@ -14,18 +14,21 @@ router.get("/type/:classificationId", utilities.handleErrors(invCont.buildByClas
 router.get("/detail/:invId", utilities.handleErrors(invCont.buildItemDetails));
 
 // Route for Management view
-router.get("/management", utilities.handleErrors(invCont.buildManagement));
+router.get("/management", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invCont.buildManagement));
 
 // Route for Add Classification View (display form)
-router.get("/add-classification", utilities.handleErrors(invCont.buildAddClassification));
+router.get("/add-classification", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invCont.buildAddClassification));
 
 // Route for Add Inventory View
-router.get("/add-inventory", utilities.handleErrors(invCont.buildAddInventory));
+router.get("/add-inventory", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invCont.buildAddInventory));
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invCont.getInventoryJSON));
 
-// Route for modifying a inventory item
-router.get("/edit/:inv_id", utilities.handleErrors(invCont.editInventoryView));
+// Route for modifying an inventory item
+router.get("/edit/:inv_id", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invCont.editInventoryView));
+
+// Route to display the delete confirmation view
+router.get("/delete/:inv_id", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invCont.buildDeleteInventoryConfirmationView));
 
 // Route for submitting new classification (process form POST)
 router.post("/add-classification", validateClassification, checkValidation, utilities.handleErrors(invCont.addClassification));
@@ -36,6 +39,7 @@ router.post("/add-inventory", validateInventoryItem, checkInventoryData, utiliti
 // Route for handling incoming request to update the Inventory Item details
 router.post("/update/", validateInventoryItem, checkUpdateData, utilities.handleErrors(invCont.updateInventory));
 
-
+// Route to process the deletion of an inventory item
+router.post("/delete", utilities.handleErrors(invCont.deleteInventoryItem));
 
 module.exports = router;

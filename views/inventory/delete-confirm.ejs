@@ -1,0 +1,34 @@
+<!-- The Content Heading -->
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { %>
+        <h1>Delete Inventory Item</h1>
+        <% } %>
+
+            <!-- Flash Messages -->
+            <%- messages() %>
+
+                <div class="form-container">
+                    <form id="deleteInventoryForm" action="/inv/delete" name="deleteInventoryForm" method="post">
+                        
+                        <p class="alert">Confirm Deletion - The delete is permanent.</p>
+                        
+                        <label for="inv_make">Make</label>
+                        <input type="text" id="inv_make" name="inv_make" readonly required placeholder="Make" value="<%= locals.inv_make || '' %>">
+                    
+                        <label for="inv_model">Model</label>
+                        <input type="text" id="inv_model" name="inv_model" readonly required placeholder="Model" value="<%= locals.inv_model || '' %>">
+                    
+                        <label for="inv_year">Year</label>
+                        <input type="number" id="inv_year" name="inv_year" readonly required placeholder="Year" min="1886" max="2099" step="1" value="<%= locals.inv_year || '' %>">
+                    
+                        <label for="inv_price">Price</label>
+                        <input type="number" id="inv_price" name="inv_price" readonly required step="0.01" min="0" placeholder="Price" value="<%= locals.inv_price || '' %>">
+              
+                        <button type="submit">Delete Vehicle</button>
+
+                        <input type="hidden" name="inv_id" value="<%= locals.inv_id || '' %>">
+                    </form>
+                </div>

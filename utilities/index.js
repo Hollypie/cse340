@@ -123,23 +123,26 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
-   jwt.verify(
-    req.cookies.jwt,
-    process.env.ACCESS_TOKEN_SECRET,
-    function (err, accountData) {
-     if (err) {
-      req.flash("error", "Please log in")
-      res.clearCookie("jwt")
-      return res.redirect("/account/login")
-     }
-     res.locals.accountData = accountData
-     res.locals.loggedin = 1
-     next()
-    })
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("error", "Please log in")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        res.locals.user = accountData
+        next()
+      }
+    )
   } else {
-   next()
+    res.locals.user = null // Prevents undefined error in EJS
+    next()
   }
- }
+}
 
 /* ****************************************
  *  Check Login
@@ -150,6 +153,25 @@ Util.checkLogin = (req, res, next) => {
   } else {
     const message = "Please log in."
     req.flash("notice", message)
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+ *  Check if Employee or Admin is logged in
+ * ************************************ */
+Util.checkEmployeeOrAdmin = (req, res, next) => {
+  const accountData = res.locals.accountData
+
+  if (res.locals.loggedin && accountData) {
+    if (["Admin", "Employee"].includes(accountData.account_type)) {
+      return next()
+    } else {
+      req.flash("notice", "Access denied. Employee or Admin account required.")
+      return res.redirect("/account/")
+    }
+  } else {
+    req.flash("notice", "Please log in with an Employee or Admin account.")
     return res.redirect("/account/login")
   }
 }
