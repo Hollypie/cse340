@@ -82,6 +82,7 @@ async function updateAccount(account_id, account_firstname, account_lastname, ac
       account_email,
       account_id
     ]);
+    
     return result.rowCount === 1;
   } catch (error) {
     console.error("Error updating account:", error); // good for debugging
@@ -89,6 +90,44 @@ async function updateAccount(account_id, account_firstname, account_lastname, ac
   }
 }
 
+/* *****************************
+ *  Get account by ID
+ * *************************** */
+async function getAccountById(account_id) {
+  try {
+    const sql = `
+      SELECT account_id, account_firstname, account_lastname, account_email 
+      FROM public.account 
+      WHERE account_id = $1
+    `;
+    const result = await pool.query(sql, [account_id]);
+    return result.rows[0]; // return the first row (should be only one)
+  } catch (error) {
+    console.error("Error getting account by ID:", error);
+    throw error;
+  }
+}
+
+/* *****************************
+ *   Update account
+ * *************************** */
+async function updatePassword(account_id, hashedPassword) {
+  try {
+    const sql = `
+      UPDATE public.account 
+      SET account_password = $1
+      WHERE account_id = $2
+    `;
+    const result = await pool.query(sql, [
+      hashedPassword,
+      account_id
+    ]);
+    return result.rowCount === 1;
+  } catch (error) {
+    console.error("Error updating account:", error); 
+    return false;
+  }
+}
 
 
-module.exports = { registerAccount, checkExistingEmail, checkValidCredentials, getAccountByEmail, updateAccount }
+module.exports = { registerAccount, checkExistingEmail, checkValidCredentials, getAccountByEmail, updateAccount, getAccountById, updatePassword }

@@ -40,7 +40,7 @@
                                         </h2>
 
                                         <!-- Update Account Link (for all users) -->
-                                        <p><a href="/account/update/" title="Go to Account Management Page">User <%= user.account_id %> Update Account Information</a></p>
+                                        <p><a href="/account/update" title="Go to Account Management Page">User <%= user.account_id %> Update Account Information</a></p>
 
                                         <!-- Inventory Management (for Employee or Admin only) -->
                                         <% if (user.account_type==="Employee" || user.account_type==="Admin" ) { %>

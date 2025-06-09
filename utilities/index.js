@@ -147,15 +147,22 @@ Util.checkJWTToken = (req, res, next) => {
 /* ****************************************
  *  Check Login
  * ************************************ */
+/* ****************************************
+ *  Check Login
+ * ************************************ */
 Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
-    next()
+  if (res.locals.loggedin || req.session.loggedin) {
+    res.locals.loggedin = true;
+    res.locals.account_id = req.session.account_id; // ✅ Add this line
+    res.locals.accountData = req.session.accountData; // Optional: if you store full account data
+    next();
   } else {
-    const message = "Please log in."
-    req.flash("notice", message)
-    return res.redirect("/account/login")
+    const message = "Please log in.";
+    req.flash("notice", message);
+    return res.redirect("/account/login");
   }
-}
+};
+
 
 /* ****************************************
  *  Check if Employee or Admin is logged in

@@ -51,6 +51,13 @@ app.use(cookieParser())
 
 app.use(utilities.checkJWTToken)
 
+
+// code to try to update account firstname to the header.ejs view when the account data is updated.
+app.use((req, res, next) => {
+  res.locals.accountData = req.session.accountData || null;
+  next();
+});
+
 /* ***********************
  * View Engine and Templates
  *************************/

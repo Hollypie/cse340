@@ -7,7 +7,7 @@
         </div>
         <div id="tools">
             <% if (user) { %>
-                <a href="/account/" title="Go to your account management">Welcome <%= user.account_firstname %></a>&nbsp;&nbsp;&nbsp;
+                <a href="/account/" title="Go to your account management">Welcome <%= accountData.account_firstname %></a>&nbsp;&nbsp;&nbsp;
                 <a title="Click to log out" href="/account/logout">Log Out</a>
             <% } else { %>
                 <a title="Click to log in" href="/account/login">My Account</a>
