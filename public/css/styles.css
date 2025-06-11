@@ -103,8 +103,8 @@ nav a:hover {
 }
 
 button {
-  background-color: var(--primary-color);
-  color: black;
+  background-color: var(--font-color);
+  color: white;
   padding: 1rem;
   border: none;
   font-weight: bold;
@@ -304,7 +304,7 @@ form input {
 form button {
   width: 100%;
   padding: 0.5rem;
-  background-color: #007bff;
+  background-color: var(--font-color);
   color: white;
   border: none;
   border-radius: 4px;
@@ -313,7 +313,7 @@ form button {
 }
 
 form button:hover {
-  background-color: #0056b3;
+  background-color: #013163;
 }
 
 p {
@@ -322,7 +322,7 @@ p {
 }
 
 p a {
-  color: #007bff;
+  color: var(--font-color);
   text-decoration: none;
 }
 
@@ -385,7 +385,7 @@ main li {
 
 #inventoryDisplay a {
   text-decoration: none;
-  color: #007BFF;
+  color: var(--font-color);
 }
 
 #inventoryDisplay a:hover {
