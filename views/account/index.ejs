@@ -42,6 +42,12 @@
                                         <!-- Update Account Link (for all users) -->
                                         <p><a href="/account/update" title="Go to Account Management Page"><%= user.account_firstname %> <%= user.account_lastname %>  Click Here to Update Account Information</a></p>
 
+                                        <!-- My Reviews (for all users) -->
+                                        <p><a href="/account/reviews" title="Go to My Reviews Page">
+                                                <%= user.account_firstname %>
+                                                    <%= user.account_lastname %> Click Here to see all your reviews
+                                            </a></p>
+
                                         <!-- Inventory Management (for Employee or Admin only) -->
                                         <% if (user.account_type==="Employee" || user.account_type==="Admin" ) { %>
                                             <h3>Inventory Management</h3>

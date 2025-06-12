@@ -1,0 +1,27 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { %>
+        <h1>My Reviews</h1>
+        <% } %>
+
+            <!-- Flash Messages -->
+            <%- messages() %>
+
+                <% if (locals.errors && errors.length> 0) { %>
+                    <div class="error-container">
+                        <ul>
+                            <% errors.forEach(error=> { %>
+                                <li>
+                                    <%= error.msg %>
+                                </li>
+                                <% }); %>
+                        </ul>
+                    </div>
+                    <% } %>
+
+                        
+                        <div class="reviews">
+
+                        </div>

@@ -397,3 +397,17 @@ main li {
   color: red;
   font-weight: bold;
 }
+
+/* styles for review stars */
+.star {
+  font-size: 1rem;
+  color: orangered;
+  background-color: unset;
+  border: none;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
