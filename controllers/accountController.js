@@ -215,9 +215,12 @@ async function updateAccountData(req, res) {
 async function buildManagement(req, res, next) {
   try {
     const nav = await utilities.getNav();
+    const user = req.session.accountData; 
+
     res.render("account", {
       title: "Account Management",
       nav,
+      user, // ← pass the user to the EJS view
       errors: null,
       success: req.flash("success"),
       error: req.flash("error")

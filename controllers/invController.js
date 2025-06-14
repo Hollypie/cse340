@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model");
+const reviewModel = require("../models/review-model");
 const utilities = require("../utilities/");
 
 const invCont = {};
@@ -38,6 +39,12 @@ invCont.buildItemDetails = async function (req, res, next) {
   const inv_id = req.params.invId;
   const itemData = await invModel.getDetailsByInventoryId(inv_id);
   let nav = await utilities.getNav();
+  const reviews = await reviewModel.getReviewsByInventoryId(inv_id);
+
+  
+  reviews.forEach(review => {
+    review.ratingStars = utilities.displayStars(Number(review.rating));
+  });
 
   if (itemData && itemData.length > 0) {
     const item = itemData[0];
@@ -45,6 +52,7 @@ invCont.buildItemDetails = async function (req, res, next) {
       title: `${item.inv_make} ${item.inv_model}`,
       nav,
       item,
+      reviews,
     });
   } else {
     res.render("./inventory/item", {

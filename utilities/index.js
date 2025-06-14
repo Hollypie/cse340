@@ -144,9 +144,7 @@ Util.checkJWTToken = (req, res, next) => {
   }
 }
 
-/* ****************************************
- *  Check Login
- * ************************************ */
+
 /* ****************************************
  *  Check Login
  * ************************************ */
@@ -183,5 +181,19 @@ Util.checkEmployeeOrAdmin = (req, res, next) => {
   }
 }
 
+/* ****************************************
+ *  Display Stars
+ * ************************************ */
+Util.displayStars = function (rating) {
+  rating = Number(rating);
+  if (isNaN(rating) || rating < 1) return "";
 
-module.exports = Util
+  let stars = "";
+  for (let i = 0; i < rating; i++) {
+    stars += "★";
+  }
+  return stars;
+};
+
+
+module.exports = Util;

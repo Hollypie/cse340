@@ -1,0 +1,40 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { %>
+        <h1>My Reviews</h1>
+        <% } %>
+
+            <!-- Flash Messages -->
+            <%- messages() %>
+
+                <% if (locals.errors && errors.length> 0) { %>
+                    <div class="error-container">
+                        <ul>
+                            <% errors.forEach(error=> { %>
+                                <li>
+                                    <%= error.msg %>
+                                </li>
+                                <% }); %>
+                        </ul>
+                    </div>
+                    <% } %>
+
+                        
+                    <ul class="review-list">
+                        <% reviews.forEach(review=> { %>
+                            <li class="review-item">
+                                <img src="<%= review.inv_thumbnail %>"
+                                    onerror="this.onerror=null;this.src='/images/vehicles/no-image-tn.png';"
+                                    alt="<%= review.inv_make %> <%= review.inv_model %> vehicle" width="150">
+                                <p><strong>
+                                        <%= review.inv_make %>
+                                            <%= review.inv_model %>
+                                    </strong></p>
+                                <p>Rating: <%- review.stars %></p>
+                                <p>"<%- review.review_text %>"</p>
+                            </li>
+                        <% }) %>                 
+                    </ul>
+                      

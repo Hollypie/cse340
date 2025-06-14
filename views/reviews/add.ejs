@@ -1,0 +1,37 @@
+<h1>
+    <%= title %>
+</h1>
+<%- messages() %>
+
+    <% if (typeof errors !=='undefined' && Array.isArray(errors)) { %>
+        <ul class="notice">
+            <% errors.forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
+
+            <div class="form-container">
+                <form id="addReview" action="/reviews/add" method="post">
+
+                    <!-- Hidden field with the inventory ID -->
+                    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+
+                    <label for="reviewText">Leave a Review:</label>
+                    <textarea id="reviewText" name="reviewText" rows="6" cols="40" required maxlength="500"
+                        placeholder="Max 500 characters."><%= review_text || '' %>
+                    </textarea>
+
+                    <label for="rating">Rating (1 to 5)</label>
+                    <select id="rating" name="rating" required>
+                        <% for (let i=1; i <=5; i++) { %>
+                            <option value="<%= i %>" <%=rating==i ? "selected" : "" %>><%= i %>
+                            </option>
+                            <% } %>
+                    </select>
+
+                    <button type="submit">Submit My Review</button>
+                </form>
+            </div>
