@@ -19,14 +19,15 @@ async function buildLogin(req, res, next) {
 /* ****************************************
 *  Process Logout
 * *************************************** */
-async function processLogout(req, res, next) {
-  try {
-    res.clearCookie("jwt")
-    req.flash("success", "You have successfully logged out.");
-    return res.redirect("/")
-  } catch (err) {
-    next(err)
-  }
+function processLogout(req, res) {
+  req.session.destroy(err => {
+    if (err) {
+      console.error(err);
+      return res.redirect('/');
+    }
+    res.clearCookie('sessionId');
+    res.redirect('/');
+  });
 }
 
 

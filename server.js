@@ -56,6 +56,8 @@ app.use(utilities.checkJWTToken)
 // code to try to update account firstname to the header.ejs view when the account data is updated.
 app.use((req, res, next) => {
   res.locals.accountData = req.session.accountData || null;
+  res.locals.user = req.session.accountData || null; // full user object for views like /account
+  res.locals.loggedin = req.session.loggedin || false; // boolean for header
   next();
 });
 
